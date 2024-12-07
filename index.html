@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+f<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -435,6 +435,17 @@ BOUNCY: function(pixel) {
     }
     // move and invert direction if hit
     if (!pixel.del && pixel.bx && !tryMove(pixel, pixel.x+pixel.bx, pixel.y)) { pixel.bx = -pixel.bx; }
+    if (!pixel.del && pixel.by && !tryMove(pixel, pixel.x, pixel.y+pixel.by)) { pixel.by = -pixel.by; }
+},
+BOUNCY_Y: function(pixel) {
+    if (pixel.by===undefined) {
+        pixel.by = Math.random() < 0.5 ? 1 : Math.random() < 0.5 ? 0 : -1;
+        // if both are 0, make one of them 1 or -1
+        if (pixel.by===0) {
+			pixel.by = Math.random() < 0.5 ? 1 : -1; 
+        }
+    }
+    // move and invert direction if hit
     if (!pixel.del && pixel.by && !tryMove(pixel, pixel.x, pixel.y+pixel.by)) { pixel.by = -pixel.by; }
 },
 FEEDPIXEL: function(pixel) {
@@ -10492,6 +10503,28 @@ DO_TICK: function(pixel) {
     ignore: ["shocker"],
     ignoreConduct: ["shocker"]
 },
+"gamma_ray": {
+    color: "#60a6a6",
+    behavior: [
+        "XX|XX|XX",
+        "XX|DL%0.5|XX",
+        "XX|XX|XX",
+    ],
+    behaviorOn: [
+        "XX|XX|XX",
+        "XX|CH:laser|XX",
+        "XX|XX|XX",
+    ],
+    tick: behaviors.BOUNCY_Y,
+    reactions: {
+    },
+    temp: 40,
+    category: "energy",
+    state: "gas",
+    conduct: 1,
+    density: 0.00002,
+    ignoreAir: true
+},
 "uranium": {
     color: ["#599e61","#364d3c","#494d4a","#6c8a42","#798d65","#b5e089"],
     behavior: [
@@ -11286,7 +11319,7 @@ DO_TICK: function(pixel) {
         "CL%5|CL%5|CL%5",
     ],
     reactions: {
-        "electric": { elem1:"light", elem2:"explosion" }
+        "electric": { elem1:"gamma_ray", elem2:"gamma_ray" }
     },
     category: "energy",
     state: "gas",
