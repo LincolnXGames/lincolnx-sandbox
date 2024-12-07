@@ -10453,6 +10453,29 @@ DO_TICK: function(pixel) {
     density: 0.00002,
     ignoreAir: true
 },
+"antiproton": {
+    color: "#a6ffa6",
+    behavior: [
+        "XX|XX|XX",
+        "XX|DL%0.5|XX",
+        "XX|XX|XX",
+    ],
+    behaviorOn: [
+        "XX|XX|XX",
+        "XX|CH:hydrogen|XX",
+        "XX|XX|XX",
+    ],
+    tick: behaviors.BOUNCY,
+    reactions: {
+        "electric": { elem1:null, elem2:"hydrogen", temp2:200 },
+    },
+    temp: 40,
+    category: "energy",
+    state: "gas",
+    conduct: 1,
+    density: 0.00002,
+    ignoreAir: true
+},
 "electric": {
     color: "#fffba6",
     behavior: [
